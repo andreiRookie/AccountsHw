@@ -1,6 +1,6 @@
 package accounts;
 
-public class Account {
+public abstract class Account implements MoneyTarget {
 
     protected long accountBalance;
     protected String ownerName;
@@ -11,14 +11,25 @@ public class Account {
         this.ownerName = ownerName;
     }
 
-    public boolean pay(long amount) {
-        this.accountBalance -= amount;
-        return true;
+    public abstract boolean pay(long amount);
+
+    public abstract boolean add(long amount);
+
+    @Override
+    public boolean accept(long money) {
+        return this.add(money);
     }
 
-    public boolean add(long amount) {
-        this.accountBalance += amount;
-        return true;
+    public boolean transfer(Account accountTo, long amount) {
+        if (this.pay(amount)) {
+            if (accountTo.add(amount)) {
+                return true;
+            } else {
+                this.add(amount);
+                return false;
+            }
+        }
+        return false;
     }
 
     public long getAccountBalance() {

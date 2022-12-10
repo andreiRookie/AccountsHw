@@ -3,10 +3,10 @@ package clients;
 import accounts.*;
 import java.util.Arrays;
 
-public class Client {
+public class Client implements MoneyTarget {
 
-    private String name;
-    private Account[] accounts;
+    protected String name;
+    protected Account[] accounts;
 
     public Client(String name, int maxAccountsCount) {
         this.name = name;
@@ -23,8 +23,26 @@ public class Client {
         return false;
     }
 
+    @Override
+    public boolean accept(long money) {
+        for (Account account : accounts) {
+
+            if (account == null) {
+                break;
+            }
+
+            if (account.accept(money)) return true;
+        }
+        return false;
+    }
+
     public boolean pay(long amount) {
         for (int i = 0; i < accounts.length; i++) {
+
+            if (accounts[i] == null) {
+                break;
+            }
+
             if (accounts[i].pay(amount)) {
                 return true;
             }

@@ -18,6 +18,12 @@ public class SavingsAccount extends Account {
         return false;
     }
 
+    @Override
+    public boolean add(long amount) {
+        this.accountBalance += amount;
+        return true;
+    }
+
     public long getMinBalance() {
         return this.minBalance;
     }

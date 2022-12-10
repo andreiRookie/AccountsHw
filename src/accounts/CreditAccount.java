@@ -6,12 +6,18 @@ public class CreditAccount extends Account {
         super(0, ownerName);
         this.accountType = AccountTypeEnum.CREDIT_ACCOUNT;
     }
+    @Override
+    public boolean pay(long amount) {
+        this.accountBalance -= amount;
+        return true;
+    }
 
     @Override
     public boolean add(long amount) {
         if ((this.accountBalance + amount) > 0) {
             return false;
         }
-        return super.add(amount);
+        this.accountBalance += amount;
+        return true;
     }
 }

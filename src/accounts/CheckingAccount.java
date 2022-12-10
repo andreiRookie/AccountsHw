@@ -17,4 +17,9 @@ public class CheckingAccount extends Account {
         return false;
     }
 
+    @Override
+    public boolean add(long amount) {
+        this.accountBalance += amount;
+        return true;
+    }
 }
